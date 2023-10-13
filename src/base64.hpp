@@ -28,4 +28,6 @@ public:
     void writeDataToOutputfile(const std::string& outputFilePath);
     
     void encodeTriplet(const std::string& triplet);
+    void encodeDuplet(const std::string& duplet);
+    void encodeSymbol(const char& symbol);
 };

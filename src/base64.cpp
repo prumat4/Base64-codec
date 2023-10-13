@@ -45,17 +45,43 @@ void Base64::writeDataToOutputfile(const std::string& outputFilePath) {
 }
 
 void Base64::encodeTriplet(const std::string& triplet) { 
+    std::string result = "====";
     int byte = triplet.at(0) >> 2;
-    outputData += alphabet.at(byte);
+    result.at(0) = alphabet.at(byte);
     
     byte = ((triplet.at(0) & 3)  << 4) | (triplet.at(1) >> 4);
-    outputData += alphabet.at(byte);
+    result.at(1) = alphabet.at(byte);
     
     byte = ((triplet.at(1) & 0xF) << 2) | (triplet.at(2) >> 6);
-    outputData += alphabet.at(byte);
+    result.at(2) = alphabet.at(byte);
 
     byte = triplet.at(2) & 0x3F;
-    outputData += alphabet.at(byte);
+    result.at(3) = alphabet.at(byte);
 
-    std::cout << outputData << std::endl;
+    outputData += result;
+}
+
+void Base64::encodeDuplet(const std::string& duplet) { 
+    std::string result = "===";
+    int byte = duplet.at(0) >> 2;
+    result.at(0) = alphabet.at(byte);
+    
+    byte = ((duplet.at(0) & 3)  << 4) | (duplet.at(1) >> 4);
+    result.at(1) = alphabet.at(byte);
+    
+    byte = ((duplet.at(1) & 0xF) << 2);
+    result.at(2) = alphabet.at(byte);
+
+    outputData += result;
+}
+
+void Base64::encodeSymbol(const char& symbol) { 
+    std::string result = "==";
+    int byte = symbol >> 2;
+    result.at(0) = alphabet.at(byte);
+    
+    byte = ((symbol & 3)  << 4);
+    result.at(1) = alphabet.at(byte);   
+
+    outputData += result;
 }
