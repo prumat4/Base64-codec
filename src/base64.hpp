@@ -7,23 +7,20 @@
 
 class Base64 {
 private:
-    std::string inputFilePath;
     std::ifstream inputFile;
-
+    std::ofstream outputFile;
     std::string outputFilePath;
-    std::ifstream outputFile;
-
     std::string inputData;
 
 private:
 
 public:
-    Base64(const std::string& inputFilePath_);
+    Base64(const std::string& inputFilePath);
     ~Base64();
 
-    std::string getInputFilepath() const;
-    std::string getOutputFilepath() const;
+    std::string getOutputFilePath() const;
 
     void printInputData() const;    
     void getInputDataFromFile();   
+    void writeDataToOutputfile(const std::string& outputFilePath);
 };

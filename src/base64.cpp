@@ -2,9 +2,7 @@
 
 const std::string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-Base64::Base64(const std::string& inputFilePath_) {
-    inputFilePath = inputFilePath_;
-
+Base64::Base64(const std::string& inputFilePath) {
     inputFile.open(inputFilePath, std::ios::binary);
 
     if(!inputFile)
@@ -15,15 +13,11 @@ Base64::Base64(const std::string& inputFilePath_) {
 
 Base64::~Base64() {
     inputFile.close();
-    std::cout << "File " << inputFilePath << " closed succesfully!\n";
+    std::cout << "File closed succesfully!\n";
 }
 
 
-std::string Base64::getInputFilepath() const {
-    return inputFilePath;
-}
-
-std::string Base64::getOutputFilepath() const {
+std::string Base64::getOutputFilePath() const {
     return outputFilePath;
 }
 
@@ -36,4 +30,16 @@ void Base64::getInputDataFromFile() {
 
 void Base64::printInputData() const {
     std::cout << inputData << std::endl;
+}
+
+void Base64::writeDataToOutputfile(const std::string& outputFilePath) {
+    outputFile.open(outputFilePath);
+
+    if (!outputFile.is_open()) 
+        std::cout << "Error: error while opening the file '" << outputFilePath << "'\n";
+
+    outputFile << inputData;
+
+
+    outputFile.close();
 }
