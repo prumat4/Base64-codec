@@ -45,7 +45,7 @@ void Base64::writeDataToOutputfile(const std::string& outputFilePath) {
 }
 
 void Base64::encodeTriplet(const std::string& triplet) { 
-    std::string result = "====";
+    std::string result = "===";
     int byte = triplet.at(0) >> 2;
     result.at(0) = alphabet.at(byte);
     
@@ -59,6 +59,9 @@ void Base64::encodeTriplet(const std::string& triplet) {
     result.at(3) = alphabet.at(byte);
 
     outputData += result;
+
+    std::cout << result.length();
+
 }
 
 void Base64::encodeDuplet(const std::string& duplet) { 
@@ -75,13 +78,29 @@ void Base64::encodeDuplet(const std::string& duplet) {
     outputData += result;
 }
 
-void Base64::encodeSymbol(const char& symbol) { 
-    std::string result = "==";
-    int byte = symbol >> 2;
-    result.at(0) = alphabet.at(byte);
+// void Base64::encodeSymbol(const std::string& symbol) { 
+//     std::string result = "==";
+//     int byte = symbol >> 2;
+//     result.at(0) = alphabet.at(byte);
     
-    byte = ((symbol & 3)  << 4);
-    result.at(1) = alphabet.at(byte);   
+//     byte = ((symbol & 3)  << 4);
+//     result.at(1) = alphabet.at(byte);   
 
-    outputData += result;
+//     outputData += result;
+// }
+
+void Base64::encodeFile(const std::string& outputFilePath) {
+    getInputDataFromFile();
+    int numberOfTriplets = inputData.length() / 3;
+
+    for(int i = 0; i < numberOfTriplets; i += 3)
+        encodeTriplet(inputData.substr(i, i + 2));        
+
+    // if(inputData.length() - numberOfTriplets * 3 == 2)
+    //     encodeDuplet(inputData.substr(inputData.length() - 2, inputData.length() - 1));
+
+    // if(inputData.length() - numberOfTriplets * 3 == 1)
+    //     encodeDuplet(inputData.at(inputData.length() - 1));
+
+    writeDataToOutputfile(outputFilePath);
 }

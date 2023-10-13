@@ -3,12 +3,12 @@
 int main() {
     std::string inputFilePath = "../files/test.txt";
 
+    std::cout << inputFilePath.length();
+
     Base64 coder(inputFilePath);
 
-    coder.getInputDataFromFile();
+    coder.encodeFile("../files/test-base64.txt");
     coder.printInputData();
-    coder.encodeTriplet();
-    coder.writeDataToOutputfile("../files/test-base64.txt");
 
     return 0;
 }
