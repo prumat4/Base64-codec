@@ -7,6 +7,7 @@ int main() {
 
     coder.getInputDataFromFile();
     coder.printInputData();
+    coder.encodeTriplet();
     coder.writeDataToOutputfile("../files/test-base64.txt");
 
     return 0;

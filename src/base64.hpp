@@ -3,14 +3,17 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <array>
 #include <fstream>
 
 class Base64 {
 private:
+    std::string alphabet;
     std::ifstream inputFile;
     std::ofstream outputFile;
     std::string outputFilePath;
     std::string inputData;
+    std::string outputData;
 
 private:
 
@@ -23,4 +26,6 @@ public:
     void printInputData() const;    
     void getInputDataFromFile();   
     void writeDataToOutputfile(const std::string& outputFilePath);
+    
+    void encodeTriplet(const std::string& triplet);
 };
