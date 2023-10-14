@@ -6,5 +6,7 @@ int main() {
     Base64 coder(inputFilePath);
     coder.encodeFile("../files/test-encoded.txt");
 
+    coder.decodeSymbol("bg");
+
     return 0;
 }

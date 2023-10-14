@@ -9,13 +9,16 @@
 class Base64 {
 private:
     std::string alphabet;
+    
     std::ifstream inputFile;
+    std::string inputData;
+
     std::ofstream encodedFile;
     std::string encodedFilePath;
-    std::string inputData;
     std::string encodedData;
-    std::string decodedFilePath;
 
+    std::string decodedData;
+    std::string decodedFilePath;
 private:
     void writeDataToEncodedFile(const std::string& encodedFilePath);
     void getInputDataFromFile();   
@@ -30,6 +33,10 @@ public:
     std::string getEncodedFilePath() const;
     void encodeFile(const std::string& encodedFilePath);
 
-    int decodeTriplet(const std::string& triplet);
+    int getPosInAlphabet(const char symbol);
+    int decodeTriplet(const std::string& couplet);
+    int decodeDuplet(const std::string& triplet);
+    int decodeSymbol(const std::string& duplet);
+
     int decodeFile(const std::string& decodedFilePath);
 };

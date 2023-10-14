@@ -104,14 +104,95 @@ void Base64::encodeFile(const std::string& encodedFilePath) {
     writeDataToEncodedFile(encodedFilePath);
 }
 
+int Base64::getPosInAlphabet(char symbol) {
+    for(int i = 0; i < alphabet.size(); i++) {
+        if(alphabet.at(i) == symbol)
+            return i;
+    }
+
+    return -1;
+}
+
 // return integer 
 // 0 - success, 1... - error position
-int Base64::decodeTriplet(const std::string& triplet) {
+int Base64::decodeTriplet(const std::string& couplet) {
+    std::string result = "---";
+    
+    int num = getPosInAlphabet(couplet.at(0));
+    if(num == -1)
+        return 1;
+    
+    result.at(0) += num << 2;
+    num = getPosInAlphabet(couplet.at(1));
+    if(num == -1)
+        return 2;
+    
+    result.at(0) = result.at(0) | (num >> 4);
+    result.at(1) = num << 4;
+    num = getPosInAlphabet(couplet.at(2));
+    if(num == -1)
+        return 3;
+    
+    result.at(1) = result.at(1) | (num >> 2);
+    result.at(2) = num << 6;
+    num = getPosInAlphabet(couplet.at(3));
+    if(num == -1)
+        return 4;
+    
+    result.at(2) = result.at(2) | num;
 
+    decodedData += result;
+    std::cout << result << std::endl;
 
     return 0;
 }
 
-int Base64::decodeFile(const std::string &decodedFilePath) {
+int Base64::decodeDuplet(const std::string& triplet) {
+    std::string result = "--";
+    
+    int num = getPosInAlphabet(triplet.at(0));
+    if(num == -1)
+        return 1;
+    
+    result.at(0) += num << 2;
+    num = getPosInAlphabet(triplet.at(1));
+    if(num == -1)
+        return 2;
+    
+    result.at(0) = result.at(0) | (num >> 4);
+    result.at(1) = num << 4;
+    num = getPosInAlphabet(triplet.at(2));
+    if(num == -1)
+        return 3;
+    
+    result.at(1) = result.at(1) | (num >> 2);
+    decodedData += result;
+    std::cout << result << std::endl;
+
+    return 0;
+}
+
+int Base64::decodeSymbol(const std::string& duplet) {
+    std::string result = "-";
+    
+    int num = getPosInAlphabet(duplet.at(0));
+    if(num == -1)
+        return 1;
+    
+    result.at(0) += num << 2;
+    num = getPosInAlphabet(duplet.at(1));
+    if(num == -1)
+        return 2;
+    
+    result.at(0) = result.at(0) | (num >> 4);
+    decodedData += result;
+    std::cout << result << std::endl;
+
+    return 0;
+}
+
+int Base64::decodeFile(const std::string& decodedFilePath) {
+    
+    
     return 0;
 }
