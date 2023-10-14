@@ -16,8 +16,8 @@ Base64::~Base64() {
     std::cout << "File closed successfully!\n";
 }
 
-std::string Base64::getOutputFilePath() const {
-    return outputFilePath;
+std::string Base64::getEncodedFilePath() const {
+    return encodedFilePath;
 }
 
 void Base64::getInputDataFromFile() {
@@ -27,21 +27,21 @@ void Base64::getInputDataFromFile() {
         inputData += line;
 }
 
-void Base64::writeDataToOutputfile(const std::string& outputFilePath) {
-    outputFile.open(outputFilePath);
+void Base64::writeDataToEncodedFile(const std::string& encodedFilePath) {
+    encodedFile.open(encodedFilePath);
 
-    if (!outputFile.is_open()) 
-        std::cout << "Error: error while opening the file '" << outputFilePath << "'\n";
+    if (!encodedFile.is_open()) 
+        std::cout << "Error: error while opening the file '" << encodedFilePath << "'\n";
 
-    int numberOfLines = outputData.length() / 76;
+    int numberOfLines = encodedData.length() / 76;
     for(int i = 0; i < numberOfLines; i++) {
-        outputFile << outputData.substr(i * 76, 76);
-        outputFile << "\n";
+        encodedFile << encodedData.substr(i * 76, 76);
+        encodedFile << "\n";
     }
 
-    outputFile << outputData.substr(numberOfLines * 76, outputData.length() - numberOfLines * 76);
+    encodedFile << encodedData.substr(numberOfLines * 76, encodedData.length() - numberOfLines * 76);
 
-    outputFile.close();
+    encodedFile.close();
 }
 
 void Base64::encodeTriplet(const std::string& triplet) { 
@@ -58,7 +58,7 @@ void Base64::encodeTriplet(const std::string& triplet) {
     byte = triplet.at(2) & 0x3F;
     result.at(3) = alphabet.at(byte);
 
-    outputData += result;
+    encodedData += result;
 }
 
 void Base64::encodeDuplet(const std::string& duplet) { 
@@ -72,7 +72,7 @@ void Base64::encodeDuplet(const std::string& duplet) {
     byte = ((duplet.at(1) & 0xF) << 2);
     result.at(2) = alphabet.at(byte);
 
-    outputData += result;
+    encodedData += result;
 }
 
 void Base64::encodeSymbol(const char& symbol) { 
@@ -83,10 +83,10 @@ void Base64::encodeSymbol(const char& symbol) {
     byte = ((symbol & 3)  << 4);
     result.at(1) = alphabet.at(byte);   
 
-    outputData += result;
+    encodedData += result;
 }
 
-void Base64::encodeFile(const std::string& outputFilePath) {
+void Base64::encodeFile(const std::string& encodedFilePath) {
     getInputDataFromFile();
     int numberOfTriplets = inputData.length() / 3;
 
@@ -101,5 +101,17 @@ void Base64::encodeFile(const std::string& outputFilePath) {
 
     std::cout << "Input data successfully encoded\n";
 
-    writeDataToOutputfile(outputFilePath);
+    writeDataToEncodedFile(encodedFilePath);
+}
+
+// return integer 
+// 0 - success, 1... - error position
+int Base64::decodeTriplet(const std::string& triplet) {
+
+
+    return 0;
+}
+
+int Base64::decodeFile(const std::string &decodedFilePath) {
+    return 0;
 }

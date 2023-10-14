@@ -4,7 +4,7 @@ int main() {
     std::string inputFilePath = "../files/test.txt";
 
     Base64 coder(inputFilePath);
-    coder.encodeFile("../files/test-base64.txt");
+    coder.encodeFile("../files/test-encoded.txt");
 
     return 0;
 }

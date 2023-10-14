@@ -10,22 +10,26 @@ class Base64 {
 private:
     std::string alphabet;
     std::ifstream inputFile;
-    std::ofstream outputFile;
-    std::string outputFilePath;
+    std::ofstream encodedFile;
+    std::string encodedFilePath;
     std::string inputData;
-    std::string outputData;
+    std::string encodedData;
+    std::string decodedFilePath;
 
 private:
-
-    void writeDataToOutputfile(const std::string& outputFilePath);
+    void writeDataToEncodedFile(const std::string& encodedFilePath);
     void getInputDataFromFile();   
-public:
+
     void encodeTriplet(const std::string& triplet);
     void encodeDuplet(const std::string& duplet);
     void encodeSymbol(const char& symbol);
+public:
     Base64(const std::string& inputFilePath);
     ~Base64();
 
-    std::string getOutputFilePath() const;
-    void encodeFile(const std::string& outputFilePath);
+    std::string getEncodedFilePath() const;
+    void encodeFile(const std::string& encodedFilePath);
+
+    int decodeTriplet(const std::string& triplet);
+    int decodeFile(const std::string& decodedFilePath);
 };
