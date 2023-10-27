@@ -27,7 +27,7 @@ void Base64::getInputDataFromFile() {
         inputData += line;
 }
 
-void Base64::writeDataToEncodedFile(const std::string& encodedFilePath) {
+void Base64::writeDataToFile(const std::string& encodedFilePath) {
     encodedFile.open(encodedFilePath);
 
     if (!encodedFile.is_open()) 
@@ -101,7 +101,7 @@ void Base64::encodeFile(const std::string& encodedFilePath) {
 
     std::cout << "Input data successfully encoded\n";
 
-    writeDataToEncodedFile(encodedFilePath);
+    writeDataToFile(encodedFilePath);
 }
 
 int Base64::getPosInAlphabet(char symbol) {
@@ -192,7 +192,11 @@ int Base64::decodeSymbol(const std::string& duplet) {
 }
 
 int Base64::decodeFile(const std::string& decodedFilePath) {
-    
-    
     return 0;
 }
+
+// do refactoring, so one class will do one thing 
+// class Base64 is just a base class with base methods and fields to work with files
+// class Encoder inherits from base64 class and use those methods and also encodes a file 
+// class Decoder inherits from base64 class and use those methods and also decodes a file
+// and fix that bug with '?' as a first symbol of decoded string   

@@ -20,7 +20,7 @@ private:
     std::string decodedData;
     std::string decodedFilePath;
 private:
-    void writeDataToEncodedFile(const std::string& encodedFilePath);
+    void writeDataToFile(const std::string& encodedFilePath);
     void getInputDataFromFile();   
 
     void encodeTriplet(const std::string& triplet);
