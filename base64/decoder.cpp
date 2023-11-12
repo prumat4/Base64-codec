@@ -88,14 +88,14 @@ int Decoder::decodeFile(const std::string& decodedFilePath) {
     file.open(decodedFilePath, std::ios::binary);
 
     if (!file.is_open()) {
-        std::cout << "Error: Unable to open the decoded file '" << decodedFilePath << "'\n";
+        std::cout << "Decoder error message: Unable to open the output file '" << decodedFilePath << "'\n";
         return 1;
     }
 
     file << outputData;
     file.close();
 
-    std::cout << "Decoder: Input data successfully decoded!\n";
+    std::cout << "Decoder info message: Input data successfully decoded!\n";
 
     return 0;
 }

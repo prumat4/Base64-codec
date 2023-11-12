@@ -4,7 +4,7 @@ void Coder::writeDataToFile(const std::string& outputFilePath) {
     outputFile.open(outputFilePath);
 
     if (!outputFile.is_open()) 
-        std::cout << "Error: error while opening the file '" << outputFilePath << "'\n";
+        std::cout << "Coder error message: error while opening the output file '" << outputFilePath << "'\n";
 
     int numberOfLines = outputData.length() / 76;
     for(int i = 0; i < numberOfLines; i++) {
@@ -72,7 +72,7 @@ void Coder::encodeFile(const std::string& encodedFilePath) {
     if(inputData.length() - numberOfTriplets * 3 == 1)
         encodeSymbol(inputData.at(inputData.length() - 1));
 
-    std::cout << "Input data successfully encoded\n";
+    std::cout << "Coder info message: Input data successfully encoded\n";
 
     writeDataToFile(encodedFilePath);
 }

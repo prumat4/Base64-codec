@@ -4,7 +4,7 @@ Base64::Base64(const std::string& inputFilePath) {
     inputFile.open(inputFilePath, std::ios::binary);
 
     if(!inputFile)
-        std::cout << "Error: error while opening the file '" << inputFilePath << "'\n";
+        std::cout << "Base64 error message: error while opening the file '" << inputFilePath << "'\n";
     else 
         std::cout << "File " << inputFilePath << " opened succesfully, processing it ...\n";
     
@@ -13,7 +13,6 @@ Base64::Base64(const std::string& inputFilePath) {
 
 Base64::~Base64() {
     inputFile.close();
-    std::cout << "File closed successfully!\n";
 }
 
 void Base64::getInputDataFromFile() {
