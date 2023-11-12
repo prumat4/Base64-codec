@@ -18,7 +18,6 @@ protected:
     std::string outputData;
 
     void getInputDataFromFile();   
-    virtual void WriteDataToOutputFile(const std::string& outputFilePath) = 0;
 public:
     Base64(const std::string& inputFilePath);
     ~Base64();
@@ -26,7 +25,7 @@ public:
 
 class Coder : public Base64 {
 private:
-    void WriteDataToOutputFile(const std::string& outputFilePath) override;
+    void writeDataToFile(const std::string& outputFilePath);
     void encodeTriplet(const std::string& triplet);
     void encodeDuplet(const std::string& duplet);
     void encodeSymbol(const char& symbol);
@@ -43,7 +42,6 @@ private:
     int decodeDuplet(const std::string& triplet);
     int decodeSymbol(const std::string& duplet);
 
-    void WriteDataToOutputFile(const std::string& outputFilePath) override;
 public:
     Decoder(const std::string& inputFilePath) : Base64(inputFilePath) {}
     int decodeFile(const std::string& decodedFilePath);
