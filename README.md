@@ -1,5 +1,8 @@
 # base64-codec
-The project structure includes a single header file `(base64.hpp)` containing class declarations for Base64, Decoder, and Coder, and separate implementation files `(base64.cpp, decoder.cpp, coder.cpp)` for each class.
+The project structure includes a single header file `(base64.hpp)` containing class declarations for Base64, Decoder, and Coder, and separate implementation files `(base64.cpp, decoder.cpp, coder.cpp)` for each class. In demonstration-files folder u can find:
+- `test.txt`- file with text that will be encoded
+- `test-encoded.txt` - encoded test.txt
+- `test-decoded.txt` - decoded test-encoded.txt file 
 
 ## Software requirements (optional)
 Cmake && c++11
