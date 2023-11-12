@@ -122,76 +122,86 @@ int Base64::decodeTriplet(const std::string& couplet) {
     if(num == -1)
         return 1;
     
-    result.at(0) += num << 2;
+    result.at(0) = num << 2;
     num = getPosInAlphabet(couplet.at(1));
     if(num == -1)
         return 2;
     
     result.at(0) = result.at(0) | (num >> 4);
-    result.at(1) = num << 4;
+    result.at(1) = (num << 4) & 0xFF;
     num = getPosInAlphabet(couplet.at(2));
     if(num == -1)
         return 3;
     
     result.at(1) = result.at(1) | (num >> 2);
-    result.at(2) = num << 6;
+    result.at(2) = (num << 6) & 0xFF;
     num = getPosInAlphabet(couplet.at(3));
     if(num == -1)
         return 4;
     
     result.at(2) = result.at(2) | num;
-
     decodedData += result;
-    std::cout << result << std::endl;
-
     return 0;
 }
 
-int Base64::decodeDuplet(const std::string& triplet) {
+int Base64::decodeDuplet(const std::string& duplet) {
     std::string result = "--";
     
-    int num = getPosInAlphabet(triplet.at(0));
-    if(num == -1)
+    int num = getPosInAlphabet(duplet.at(0));
+    if (num == -1)
         return 1;
     
-    result.at(0) += num << 2;
-    num = getPosInAlphabet(triplet.at(1));
-    if(num == -1)
+    result.at(0) = num << 2;
+    num = getPosInAlphabet(duplet.at(1));
+    if (num == -1)
         return 2;
     
     result.at(0) = result.at(0) | (num >> 4);
-    result.at(1) = num << 4;
-    num = getPosInAlphabet(triplet.at(2));
-    if(num == -1)
-        return 3;
-    
-    result.at(1) = result.at(1) | (num >> 2);
+    result.at(1) = (num << 4) & 0xFF;
     decodedData += result;
-    std::cout << result << std::endl;
 
     return 0;
 }
 
-int Base64::decodeSymbol(const std::string& duplet) {
+int Base64::decodeSymbol(const std::string& symbol) {
     std::string result = "-";
     
-    int num = getPosInAlphabet(duplet.at(0));
-    if(num == -1)
+    int num = getPosInAlphabet(symbol.at(0));
+    if (num == -1)
         return 1;
     
-    result.at(0) += num << 2;
-    num = getPosInAlphabet(duplet.at(1));
-    if(num == -1)
-        return 2;
-    
-    result.at(0) = result.at(0) | (num >> 4);
+    result.at(0) = num << 2;
     decodedData += result;
-    std::cout << result << std::endl;
 
     return 0;
 }
 
 int Base64::decodeFile(const std::string& decodedFilePath) {
+    getInputDataFromFile();
+    int numberOfSymbols = inputData.length() / 4;
+
+    for (int i = 0; i < numberOfSymbols; i++)
+        decodeTriplet(inputData.substr(i * 4, 4));
+
+    if (inputData.length() % 4 == 3)
+        decodeDuplet(inputData.substr(inputData.length() - 3, 3));
+
+    if (inputData.length() % 4 == 2)
+        decodeSymbol(inputData.substr(inputData.length() - 2, 2));
+
+    std::ofstream file;
+    file.open(decodedFilePath, std::ios::binary);
+
+    if (!file.is_open()) {
+        std::cout << "Error: Unable to open the decoded file '" << decodedFilePath << "'\n";
+        return 1;
+    }
+
+    file << decodedData;
+    file.close();
+
+    std::cout << "Decoder: Input data successfully decoded!\n";
+
     return 0;
 }
 

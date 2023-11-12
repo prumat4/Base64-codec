@@ -5,6 +5,7 @@
 #include <vector>
 #include <array>
 #include <fstream>
+#include <sstream>
 
 class Base64 {
 private:

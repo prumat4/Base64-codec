@@ -1,12 +1,15 @@
 #include "base64.hpp"
 
 int main() {
-    std::string inputFilePath = "../files/test.txt";
+    std::string test = "../files/test.txt";
+    std::string encodedFile = "../files/test-encoded.txt";
+    std::string decodedFile = "../files/test-decoded.txt";
 
-    Base64 coder(inputFilePath);
-    // coder.encodeFile("../files/test-encoded.txt");
+    Base64 coder(test);
+    coder.encodeFile(encodedFile);
 
-    coder.decodeFile("../files/test-base64.txt");
+    Base64 decoder(encodedFile);
+    decoder.decodeFile(decodedFile);
 
     return 0;
 }
