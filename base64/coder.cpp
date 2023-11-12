@@ -1,6 +1,6 @@
 #include "base64.hpp"
 
-void Coder::writeDataToFile(const std::string& outputFilePath) {
+void Coder::WriteDataToOutputFile(const std::string& outputFilePath) {
     outputFile.open(outputFilePath);
 
     if (!outputFile.is_open()) 
@@ -66,13 +66,13 @@ void Coder::encodeFile(const std::string& encodedFilePath) {
     for(int i = 0; i < numberOfTriplets; i++)
         encodeTriplet(inputData.substr(i * 3, 3));        
 
-    if(inputData.length() - numberOfTriplets * 3 == 2)
+    if(inputData.length() % 3 == 2)
         encodeDuplet(inputData.substr(inputData.length() - 2, 2));
 
-    if(inputData.length() - numberOfTriplets * 3 == 1)
+    if(inputData.length() % 3 == 1)
         encodeSymbol(inputData.at(inputData.length() - 1));
 
     std::cout << "Coder info message: Input data successfully encoded\n";
 
-    writeDataToFile(encodedFilePath);
+    WriteDataToOutputFile(encodedFilePath);
 }

@@ -1,5 +1,16 @@
 #include "base64.hpp"
 
+void Decoder::WriteDataToOutputFile(const std::string& outputFilePath) {
+    outputFile.open(outputFilePath);
+
+    if (!outputFile.is_open()) 
+        std::cout << "Coder error message: error while opening the output file '" << outputFilePath << "'\n";
+
+    outputFile << outputData;
+
+    outputFile.close();
+}
+
 int Decoder::getPosInAlphabet(char symbol) {
     for(int i = 0; i < alphabet.size(); i++) {
         if(alphabet.at(i) == symbol)
@@ -34,7 +45,6 @@ int Decoder::decodeTriplet(const std::string& couplet) {
     if(num == -1)
         return 4;
     
-    result.at(2) = result.at(2) | num;
     outputData += result;
     return 0;
 }
@@ -46,15 +56,12 @@ int Decoder::decodeDuplet(const std::string& duplet) {
     if (num == -1)
         return 1;
     
-    result.at(0) = num << 2;
+    result.at(0) = num << 3;
     num = getPosInAlphabet(duplet.at(1));
     if (num == -1)
         return 2;
     
-    result.at(0) = result.at(0) | (num >> 4);
-    result.at(1) = (num << 4) & 0xFF;
     outputData += result;
-
     return 0;
 }
 
@@ -67,7 +74,6 @@ int Decoder::decodeSymbol(const std::string& symbol) {
     
     result.at(0) = num << 2;
     outputData += result;
-
     return 0;
 }
 
@@ -84,17 +90,7 @@ int Decoder::decodeFile(const std::string& decodedFilePath) {
     if (inputData.length() % 4 == 2)
         decodeSymbol(inputData.substr(inputData.length() - 2, 2));
 
-    std::ofstream file;
-    file.open(decodedFilePath, std::ios::binary);
-
-    if (!file.is_open()) {
-        std::cout << "Decoder error message: Unable to open the output file '" << decodedFilePath << "'\n";
-        return 1;
-    }
-
-    file << outputData;
-    file.close();
-
+    outputFile << outputData;
     std::cout << "Decoder info message: Input data successfully decoded!\n";
 
     return 0;
