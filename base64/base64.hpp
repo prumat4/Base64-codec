@@ -10,6 +10,7 @@
 class Base64 {
 protected:
     std::string alphabet;
+
     std::ifstream inputFile;
     std::string inputData;
 
@@ -17,7 +18,8 @@ protected:
     std::string outputFilePath;
     std::string outputData;
 
-    void getInputDataFromFile();   
+    void getInputDataFromFile();  
+    virtual void WriteDataToOutputFile(const std::string& outputFilePath) = 0; 
 public:
     Base64(const std::string& inputFilePath);
     ~Base64();
@@ -25,7 +27,7 @@ public:
 
 class Coder : public Base64 {
 private:
-    void writeDataToFile(const std::string& outputFilePath);
+    void WriteDataToOutputFile(const std::string& outputFilePath) override;
     void encodeTriplet(const std::string& triplet);
     void encodeDuplet(const std::string& duplet);
     void encodeSymbol(const char& symbol);
@@ -37,6 +39,7 @@ public:
 
 class Decoder : public Base64 {
 private:
+    void WriteDataToOutputFile(const std::string& outputFilePath) override;
     int getPosInAlphabet(const char symbol);
     int decodeTriplet(const std::string& couplet);
     int decodeDuplet(const std::string& triplet);

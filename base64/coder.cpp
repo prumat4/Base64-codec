@@ -1,6 +1,6 @@
 #include "base64.hpp"
 
-void Coder::writeDataToFile(const std::string& outputFilePath) {
+void Coder::WriteDataToOutputFile(const std::string& outputFilePath) {
     outputFile.open(outputFilePath);
 
     if (!outputFile.is_open()) 
@@ -74,5 +74,5 @@ void Coder::encodeFile(const std::string& encodedFilePath) {
 
     std::cout << "Coder info message: Input data successfully encoded\n";
 
-    writeDataToFile(encodedFilePath);
+    WriteDataToOutputFile(encodedFilePath);
 }

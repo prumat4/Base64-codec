@@ -1,5 +1,15 @@
 #include "base64.hpp"
 
+void Decoder::WriteDataToOutputFile(const std::string& outputFilePath) {
+    outputFile.open(outputFilePath);
+
+    if (!outputFile.is_open()) 
+        std::cout << "Coder error message: error while opening the output file '" << outputFilePath << "'\n";
+
+    outputFile << outputData;
+    outputFile.close();
+}
+
 int Decoder::getPosInAlphabet(char symbol) {
     for(int i = 0; i < alphabet.size(); i++) {
         if(alphabet.at(i) == symbol)
@@ -84,18 +94,9 @@ int Decoder::decodeFile(const std::string& decodedFilePath) {
     if (inputData.length() % 4 == 2)
         decodeSymbol(inputData.substr(inputData.length() - 2, 2));
 
-    std::ofstream file;
-    file.open(decodedFilePath, std::ios::binary);
-
-    if (!file.is_open()) {
-        std::cout << "Decoder error message: Unable to open the output file '" << decodedFilePath << "'\n";
-        return 1;
-    }
-
-    file << outputData;
-    file.close();
-
     std::cout << "Decoder info message: Input data successfully decoded!\n";
+
+    WriteDataToOutputFile(decodedFilePath);
 
     return 0;
 }
