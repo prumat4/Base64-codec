@@ -8,36 +8,42 @@
 #include <sstream>
 
 class Base64 {
-private:
+protected:
     std::string alphabet;
-    
     std::ifstream inputFile;
     std::string inputData;
 
-    std::ofstream encodedFile;
-    std::string encodedFilePath;
-    std::string encodedData;
+    std::ofstream outputFile;
+    std::string outputFilePath;
+    std::string outputData;
 
-    std::string decodedData;
-    std::string decodedFilePath;
-private:
-    void writeDataToFile(const std::string& encodedFilePath);
     void getInputDataFromFile();   
-
-    void encodeTriplet(const std::string& triplet);
-    void encodeDuplet(const std::string& duplet);
-    void encodeSymbol(const char& symbol);
 public:
     Base64(const std::string& inputFilePath);
     ~Base64();
+};
 
-    std::string getEncodedFilePath() const;
+class Coder : public Base64 {
+private:
+    void writeDataToFile(const std::string& outputFilePath);
+    void encodeTriplet(const std::string& triplet);
+    void encodeDuplet(const std::string& duplet);
+    void encodeSymbol(const char& symbol);
+
+public:
+    Coder(const std::string& inputFilePath) : Base64(inputFilePath) {}
     void encodeFile(const std::string& encodedFilePath);
+};
 
+class Decoder : public Base64 {
+
+private:
     int getPosInAlphabet(const char symbol);
     int decodeTriplet(const std::string& couplet);
     int decodeDuplet(const std::string& triplet);
     int decodeSymbol(const std::string& duplet);
 
+public:
+    Decoder(const std::string& inputFilePath) : Base64(inputFilePath) {}
     int decodeFile(const std::string& decodedFilePath);
 };

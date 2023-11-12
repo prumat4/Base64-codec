@@ -5,10 +5,10 @@ int main() {
     std::string encodedFile = "../files/test-encoded.txt";
     std::string decodedFile = "../files/test-decoded.txt";
 
-    Base64 coder(test);
+    Coder coder(test);
     coder.encodeFile(encodedFile);
 
-    Base64 decoder(encodedFile);
+    Decoder decoder(encodedFile);
     decoder.decodeFile(decodedFile);
 
     return 0;
